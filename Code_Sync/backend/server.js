@@ -7,11 +7,7 @@ const { Server } = require('socket.io');
 const ACTIONS = require('./Actions');
 const cors=require('cors');
 
-app.use(cors({
-    origin: ["https://code-sync-real-time.vercel.app"],
-    methods: ["POST", "GET"],
-    credentials: true
-}));
+app.use(cors());
 
 
 const server = http.createServer(app);
@@ -26,13 +22,13 @@ app.use(express.urlencoded({
     extended:true
 }));
 
-app.use(express.static('build'));
-app.use((req, res, next) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+// app.use(express.static('build'));
+// app.use((req, res, next) => {
+//     res.sendFile(path.join(__dirname, 'build', 'index.html'));
+// });
 
 app.get("/",(req,res)=>{
-    res.json("Hello")
+    res.send("Hello");
 })
 
 const userSocketMap = {};
