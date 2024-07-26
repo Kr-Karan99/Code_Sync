@@ -7,10 +7,19 @@ const { Server } = require('socket.io');
 const ACTIONS = require('./Actions');
 const cors=require('cors');
 
+app.use(cors({
+    origin: ["https://code-sync-real-time.vercel.app"],
+    methods: ["POST", "GET"],
+    credentials: true
+}));
+
+
 const server = http.createServer(app);
 const io = new Server(server);
 
-app.use(cors());
+
+
+//app.use(cors());
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({
@@ -21,6 +30,10 @@ app.use(express.static('build'));
 app.use((req, res, next) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+
+app.get("/",(req,res)=>{
+    res.json("Hello")
+})
 
 const userSocketMap = {};
 function getAllConnectedClients(roomId) {
